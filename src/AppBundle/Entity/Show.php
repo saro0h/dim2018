@@ -20,47 +20,54 @@ class Show
 
     /**
      * @ORM\Column
-     * @Assert\NotBlank(message="Please provide a name for the show.")
+     * @Assert\NotBlank(message="Please provide a name for the show.", groups={"create", "update"})
      */
 	private $name;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"create", "update"})
      */
 	private $abstract;
 
 	 /**
      * @ORM\Column
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"create", "update"})
      */
 	private $country;
 
 	/**
      * @ORM\Column
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"create", "update"})
      */
 	private $author;
 
     /**
      * @ORM\Column(type="date")
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"create", "update"})
      */
 	private $releaseDate;
 
     /**
      * @ORM\Column
-     * @Assert\Image(minHeight=300, minWidth=750)
+     * @Assert\Image(minHeight=300, minWidth=750, groups={"create"})
      */
 	private $mainPicture;
+
+	private $tmpPicture;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      *
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"create", "update"})
      */
 	private $category;
+
+	public function getId()
+	{
+		return $this->id;
+	}
 
 	public function getName()
 	{
@@ -120,6 +127,16 @@ class Show
 	public function setMainPicture($mainPicture)
 	{
 		$this->mainPicture = $mainPicture;
+	}
+
+	public function getTmpPicture()
+	{
+		return $this->tmpPicture;
+	}
+
+	public function setTmpPicture($tmpPicture)
+	{
+		$this->tmpPicture = $tmpPicture;
 	}
 
 	public function getCategory()

@@ -24,7 +24,7 @@ class ShowType extends AbstractType
     		->add('country', CountryType::class, ['preferred_choices' => array('FR', 'US', 'CA')])
     		->add('author')
     		->add('releaseDate')
-    		->add('mainPicture', FileType::class)
+    		->add('tmpPicture', FileType::class, ['label' => 'Main Picture'])
     	;
     }
 }
