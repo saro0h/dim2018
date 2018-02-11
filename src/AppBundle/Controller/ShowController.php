@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Show;
 use AppBundle\File\FileUploader;
 use AppBundle\Type\ShowType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +18,19 @@ class ShowController extends Controller
     /**
      * @Route("/", name="list")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $shows = $this->getDoctrine()->getRepository('AppBundle:Show')->findAll();
+        $showRepository = $this->getDoctrine()->getRepository('AppBundle:Show');
+        $session = $request->getSession();
+
+        if ($session->has('query_search_shows')) {
+            $querySearchShows = $session->get('query_search_shows');
+            $shows = $showRepository->findAllByQuery($querySearchShows);
+
+            $request->getSession()->remove('query_search_shows');
+        } else {
+            $shows = $showRepository->findAll();
+        }
 
         return $this->render('show/list.html.twig', ['shows' => $shows]);
     }
@@ -30,7 +41,7 @@ class ShowController extends Controller
     public function createAction(Request $request, FileUploader $fileUploader)
     {
         $show = new Show();
-        $form = $this->createForm(ShowType::class, $show);
+        $form = $this->createForm(ShowType::class, $show, ['validation_groups' => 'create']);
 
         $form->handleRequest($request);
 
@@ -90,5 +101,16 @@ class ShowController extends Controller
                'categories' => ['Web Design', 'HTML', 'Freebies', 'Javascript', 'CSS', 'Tutorials']
             ]
         );
+    }
+
+    /**
+     * @Route("/search", name="search")
+     * @Method({"POST"})
+     */
+    public function searchAction(Request $request)
+    {
+        $request->getSession()->set('query_search_shows', $request->request->get('query'));
+
+        return $this->redirectToRoute('show_list');
     }
 }
