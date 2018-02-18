@@ -13,6 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CategoryController extends Controller
 {
+
+    public function categoriesAction()
+    {
+        return $this->render('_includes/categories.html.twig', [
+               'categories' => $this->getDoctrine()->getRepository('AppBundle:Category')->findAll()
+        ]);
+    }
+
     /**
 	 * @Route("/create", name="create")
 	 */

@@ -17,7 +17,7 @@ class ShowFinder
 		dump($tmp);
 		die;
 
-		return $results;
+		//return $results;
 	}
 
 	public function addFinder(ShowFinderInterface $finder)

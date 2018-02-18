@@ -111,15 +111,6 @@ class ShowController extends Controller
         ]);
     }
 
-    public function categoriesAction()
-    {
-        return $this->render('_includes/categories.html.twig',
-            [
-               'categories' => ['Web Design', 'HTML', 'Freebies', 'Javascript', 'CSS', 'Tutorials']
-            ]
-        );
-    }
-
     /**
      * @Route("/search", name="search")
      * @Method({"POST"})
