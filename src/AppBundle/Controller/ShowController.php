@@ -29,25 +29,9 @@ class ShowController extends Controller
 
         if ($session->has('query_search_shows')) {
             $shows = $showFinder->searchByName($session->get('query_search_shows'));
-
-            dump($shows); die;
         } else {
             $shows = $showRepository->findAll();
         }
-
-
-
-
-        /*
-
-        if ($session->has('query_search_shows')) {
-            $querySearchShows = $session->get('query_search_shows');
-            $shows = $showRepository->findAllByQuery($querySearchShows);
-
-            $request->getSession()->remove('query_search_shows');
-        } else {
-            $shows = $showRepository->findAll();
-        }*/
 
         return $this->render('show/list.html.twig', ['shows' => $shows]);
     }
@@ -66,6 +50,7 @@ class ShowController extends Controller
             $generatedFileName = $fileUploader->upload($show->getTmpPicture(), $show->getCategory()->getName());
 
             $show->setMainPicture($generatedFileName);
+            $show->setDataSource(Show::DATA_SOURCE_DB);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($show);
