@@ -8,16 +8,16 @@ class ShowFinder
 
 	public function searchByName($query)
 	{
-		$tmp = [];
+		$results = [];
 
 		foreach ($this->finders as $finder) {
 			$tmp[$finder->getName()] = $finder->findByName($query);
+
+			$results = array_merge($results, $finder->findByName($query));
+
 		}
 
-		dump($tmp);
-		die;
-
-		//return $results;
+		return $results;
 	}
 
 	public function addFinder(ShowFinderInterface $finder)
