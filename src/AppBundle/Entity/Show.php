@@ -3,11 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ShowRepository")
  * @ORM\Table(name="s_show")
+ *
+ * @JMS\ExclusionPolicy("all")
  */
 class Show
 {
@@ -18,30 +21,44 @@ class Show
 	 * @ORM\Id
 	 * @ORM\GeneratedValue
 	 * @ORM\Column(type="integer")
+	 *
+	 * @JMS\Expose
+	 * @JMS\Groups({"show"})
 	 */
 	private $id;
 
     /**
      * @ORM\Column
      * @Assert\NotBlank(message="Please provide a name for the show.", groups={"create", "update"})
+	 *
+	 * @JMS\Expose
+	 * @JMS\Groups({"show"})
      */
 	private $name;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(groups={"create", "update"})
+     *
+     * @JMS\Expose
+     * @JMS\Groups({"show"})
      */
 	private $abstract;
 
 	 /**
      * @ORM\Column
      * @Assert\NotBlank(groups={"create", "update"})
+     *
+     * @JMS\Expose
+     * @JMS\Groups({"show"})
      */
 	private $country;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="User", inversedBy="shows")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @JMS\Expose
+     * @JMS\Groups({"show"})
      */
 	private $author;
 
