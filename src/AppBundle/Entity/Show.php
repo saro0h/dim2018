@@ -40,8 +40,8 @@ class Show
 	private $country;
 
 	/**
-     * @ORM\Column
-     * @Assert\NotBlank(groups={"create", "update"})
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="shows")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
 	private $author;
 
@@ -118,7 +118,7 @@ class Show
 		return $this->author;
 	}
 
-	public function setAuthor($author)
+	public function setAuthor(User $author)
 	{
 		$this->author = $author;
 

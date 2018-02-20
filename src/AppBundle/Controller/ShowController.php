@@ -52,6 +52,8 @@ class ShowController extends Controller
             $show->setMainPicture($generatedFileName);
             $show->setDataSource(Show::DATA_SOURCE_DB);
 
+            $show->setAuthor($this->getUser());
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($show);
             $em->flush();

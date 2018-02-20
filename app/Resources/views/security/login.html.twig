@@ -10,7 +10,7 @@
 
 <form action={{ path('security_login_check') }} method="POST">
 	<label for="email">Email</label>
-	<input type="text" name="email" class="form-control" value={{ lastUsername }}/>
+	<input type="text" name="email" class="form-control" value="{{ lastUsername }}" />
 
 	<label for="email">Password</label>
 	<input type="password" name="password" class="form-control" />
