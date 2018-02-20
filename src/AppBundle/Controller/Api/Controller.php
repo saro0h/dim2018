@@ -9,6 +9,6 @@ abstract class Controller extends BaseController
 {
 	public function returnResponse($data, $statusCode)
 	{
-		return new Response($data, Response::HTTP_OK, ['Content-Type' => 'application/json']);
+		return new Response($data, $statusCode, ['Content-Type' => 'application/json']);
 	}
 }
