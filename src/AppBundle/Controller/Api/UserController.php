@@ -67,7 +67,7 @@ class UserController extends Controller
             $serializationContext->setGroups(['user_create', 'user'])
         );
 
-        $constraintViolationList = $validator->validate($user, ['validation_groups' => ['create']]);
+        $constraintViolationList = $validator->validate($user, null, ['create']);
 
         if ($constraintViolationList->count() == 0) {
             $encoder = $encoderFactory->getEncoder($user);
@@ -105,10 +105,6 @@ class UserController extends Controller
         
         $constraintViolationList = $validator->validate($newUser, null, ['update']);
 
-        // Si on change l'adresse email
-        //     => Uniqid
-        // Si on ne la change pas, ne pas vérifier.
-
         if ($constraintViolationList->count() == 0) {
             $encoder = $encoderFactory->getEncoder($newUser);
             $password = $encoder->encodePassword($newUser->getPassword(), null);
@@ -118,9 +114,24 @@ class UserController extends Controller
 
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->returnResponse('User updated.', Response::HTTP_OK);
+            return $this->returnResponse('User successfully updated.', Response::HTTP_OK);
         }
 
         return $this->returnResponse($serializer->serialize($constraintViolationList, 'json'), Response::HTTP_BAD_REQUEST); 
+    }
+
+    /**
+     * Delete a user.
+     *
+     * @Method({"DELETE"})
+     * @Route("/users/{id}", name="delete")
+     */
+    public function deleteAction(User $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($user);
+        $em->flush();
+
+        return $this->returnResponse('', Response::HTTP_NO_CONTENT);
     }
 }
