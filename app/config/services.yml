@@ -57,3 +57,6 @@ services:
         tags: ['security.voter']
     AppBundle\Security\Authorization\UserVoter:
         tags: ['security.voter']
+
+    AppBundle\Serializer\ShowHandler:
+        tags: ['jms_serializer.subscribing_handler']

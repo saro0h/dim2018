@@ -204,4 +204,16 @@ class Show
 
 		return $this;
 	}
+
+	public function update(Show $newShow)
+	{
+		$this
+		    ->setName($newShow->getName())
+		    ->setAbstract($newShow->getAbstract())
+		    ->setCountry($newShow->getCountry())
+		    ->setReleaseDate($newShow->getReleaseDate())
+		    ->setMainPicture($newShow->getMainPicture())
+		    ->setCategory($newShow->getCategory())
+		;
+	}
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\Category;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use JMS\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -76,5 +77,26 @@ class CategoryController extends Controller
 		}
 
 		return $this->returnResponse($serializer->serialize($constraintViolationList, 'json'), Response::HTTP_BAD_REQUEST);
+	}
+
+	/**
+	 * Delete a category.
+	 *
+	 * @Method({"DELETE"})
+	 * @Route("/categories/{id}", name="delete")
+	 */
+	public function deleteACtion(Category $category)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$em->remove($category);
+
+		try {
+			$em->flush();
+		} catch(ForeignKeyConstraintViolationException $e) {
+
+			return $this->returnResponse(sprintf('This category ("%s") is attached to at least one show. Make sure that this category is not attached to any show before deleting it.', $category->getName()), Response::HTTP_BAD_REQUEST);
+		}
+
+		return $this->returnResponse('', Response::HTTP_NO_CONTENT);
 	}
 }
