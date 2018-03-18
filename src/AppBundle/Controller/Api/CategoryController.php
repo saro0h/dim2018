@@ -58,6 +58,8 @@ class CategoryController extends Controller
 	}
 
 	/**
+	 * Update a category.
+	 *
 	 * @Method({"PUT"})
 	 * @Route("/categories/{id}", name="update")
 	 */

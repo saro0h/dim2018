@@ -42,7 +42,7 @@ class ShowController extends Controller
     public function createAction(Request $request, FileUploader $fileUploader)
     {
         $show = new Show();
-        $form = $this->createForm(ShowType::class, $show, ['validation_groups' => 'create']);
+        $form = $this->createForm(ShowType::class, $show, ['validation_groups' => ['create']]);
 
         $form->handleRequest($request);
 

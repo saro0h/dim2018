@@ -70,10 +70,13 @@ class Show
 
     /**
      * @ORM\Column
-     * @Assert\Image(minHeight=300, minWidth=750, groups={"create"})
      */
 	private $mainPicture;
 
+	/**
+	 * @Assert\NotBlank(message="You must provide an image.", groups={"create"})
+     * @Assert\Image(minHeight=300, minWidth=750, groups={"create"})
+	 */
 	private $tmpPicture;
 
 	/**

@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Entity
  * @ORM\Table
  *
- * @UniqueEntity("email")
+ * @UniqueEntity("email", groups={"create"})
  *
  * @JMS\ExclusionPolicy("all")
  */
@@ -31,6 +31,8 @@ class User implements UserInterface
     /**
      * @ORM\Column
      *
+	 * @Assert\NotBlank
+     *
      * @JMS\Expose
      * @JMS\Groups({"user", "show"})
      */
@@ -38,6 +40,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json_array")
+     *
+     * @Assert\NotBlank(groups={"create"})
      *
      * @JMS\Expose
      * @JMS\Type("string")
@@ -48,7 +52,7 @@ class User implements UserInterface
 	/**
      * @ORM\Column
      *
-     * @Assert\NotBlank
+     * @Assert\NotBlank(groups={"create"})
      *
      * @JMS\Expose
      * @JMS\Groups({"user_create"})
@@ -59,6 +63,7 @@ class User implements UserInterface
 	 * @ORM\Column
 	 *
 	 * @Assert\Email
+	 * @Assert\NotBlank(groups={"create"})
 	 * 
 	 * @JMS\Expose
 	 * @JMS\Groups({"user"})
@@ -138,5 +143,13 @@ class User implements UserInterface
 	public function getShows()
 	{
 		return $this->shows;
+	}
+
+	public function update(User $user)
+	{
+		$this->fullname = $user->getFullname();
+		$this->roles = explode( ', ', $user->getRoles());
+		$this->password = $user->getPassword();
+		$this->email = $user->getUsername();
 	}
 }
