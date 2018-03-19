@@ -17,6 +17,8 @@ class SecurityController extends Controller
 	 */
 	public function loginAction(AuthenticationUtils $authUtils)
 	{
+		throw new \Exception('oh non');
+
 		return $this->render('security/login.html.twig', [
 			'error' => $authUtils->getLastAuthenticationError(),
 			'lastUsername' => $authUtils->getLastUsername()
