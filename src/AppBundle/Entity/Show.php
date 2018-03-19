@@ -214,6 +214,7 @@ class Show
 		    ->setReleaseDate($newShow->getReleaseDate())
 		    ->setMainPicture($newShow->getMainPicture())
 		    ->setCategory($newShow->getCategory())
+		    ->setAuthor($newShow->getAuthor())
 		;
 	}
 }
