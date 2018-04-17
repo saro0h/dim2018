@@ -32,9 +32,10 @@ class OMDBShowFinder implements ShowFinderInterface
 	public function findByName($query)
 	{
 		$results = $this->client->get('/?apikey='.$this->apiKey.'&type=series&t="'.$query.'"');
+
 		$json = \GuzzleHttp\json_decode($results->getBody(), true);
 
-		if ($json['Response'] == 'False' && $json['Error'] == 'Series not found!') {
+		if ($json['Response'] == 'False' && $json['Error'] == 'Series not found!') {		
 			return [];
 		}
 

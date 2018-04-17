@@ -107,6 +107,8 @@ class ShowController extends Controller
      */
 	public function deleteAction(Show $show)
 	{
+		$this->denyAccessUnlessGranted('', $show, 'You are not authorized to delete this show!');
+
 		$em = $this->getDoctrine()->getManager();
 		$em->remove($show);
 		$em->flush();
