@@ -23,7 +23,6 @@ class ApiUserPasswordAuthenticator extends AbstractGuardAuthenticator
 
 	public function getCredentials(Request $request)
 	{
-
 		if (!$request->headers->has('X-USERNAME') || !$request->headers->has('X-PASSWORD')) {
 			return null;
 		}
