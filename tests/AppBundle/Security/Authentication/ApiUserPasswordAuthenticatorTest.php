@@ -7,6 +7,7 @@ use AppBundle\Security\Authentication\ApiUserPasswordAuthenticator;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\Argon2iPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class ApiUserPasswordAuthenticatorTest extends TestCase
